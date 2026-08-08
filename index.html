@@ -2016,7 +2016,7 @@
           <div class="project-title">Ammu's Chai With Maska Bun</div>
           <div class="project-subtitle">Security-Hardened Full-Stack Food Ordering Platform</div>
           <div class="project-badges">
-            <span class="status-badge">Production Deployed · Razorpay Live</span>
+            <span class="status-badge">Production Deployed · Razorpay Live Tested</span>
             <span class="project-badge">Full-Stack</span>
             <span class="project-badge">Next.js</span>
             <span class="project-badge">Supabase</span>
@@ -2025,13 +2025,25 @@
             <span class="project-badge">PWA</span>
           </div>
           <p class="project-desc">
-            <strong>Problem:</strong> food-ordering platforms that let the browser dictate order totals or payment status open the door to client-side manipulation of transaction data. <strong>Architecture:</strong> a Next.js 15 App Router storefront and admin dashboard sit in front of a Supabase PostgreSQL backend — customer requests pass through server-side validation and API routes/server actions before touching the database, so order pricing and payment state are always resolved server-side, never trusted from the client. Supabase Row-Level Security and PL/pgSQL triggers enforce that boundary again at the database layer, alongside service-role operations that stay server-only. <strong>Payment flow:</strong> checkout hands off to Razorpay; the payment response is checked server-side with HMAC-SHA256 payment signature verification before any order is created or updated, so a forged client response can't fabricate a paid order. <strong>Supporting systems:</strong> React Hook Form + Zod validate every input, a Zustand-persisted cart survives page reloads, Resend sends transactional email, a Telegram bot alerts the admin on new orders, and a Serwist-powered PWA caches the storefront for installable/offline use while excluding checkout and admin routes from the cache. <strong>Verified:</strong> the Razorpay live integration has been exercised end-to-end with one real successful payment, confirming checkout, signature verification, and order creation in production. Cash-on-delivery checkout, RLS/trigger enforcement, notifications, PWA caching, and the admin dashboard are implemented and confirmed working by the project owner in both local and production environments — this is a single-restaurant deployment, not a benchmarked-at-scale system.
+            <strong>Problem:</strong> food-ordering platforms that let the browser dictate order totals or payment status open the door to client-side manipulation of transaction data. <strong>Architecture:</strong> a Next.js 15 App Router storefront and admin dashboard sit in front of a Supabase PostgreSQL backend — customer requests pass through server-side validation and API routes/server actions before touching the database, so order pricing and payment state are always resolved server-side, never trusted from the client. Supabase Row-Level Security and PL/pgSQL triggers enforce that boundary again at the database layer, alongside service-role operations that stay server-only. <strong>Payment flow:</strong> checkout hands off to Razorpay; the payment response is checked server-side with HMAC-SHA256 payment signature verification before any order is created or updated, so a forged client response can't fabricate a paid order. <strong>Supporting systems:</strong> React Hook Form + Zod validate every input, a Zustand-persisted cart survives page reloads, Resend sends transactional email, a Telegram bot alerts the admin on new orders, and a Serwist-powered PWA caches the storefront for installable/offline use while excluding checkout and admin routes from the cache. <strong>Verified in production:</strong> the site is live at ammus-chai-with-maska-bun.vercel.app and serving real customer orders. The Razorpay checkout/payment flow has been tested successfully in the live production environment: HMAC-SHA256 payment signature verification was confirmed on a real successful payment, and order creation after that successful payment was verified in production. The Razorpay webhook endpoint is implemented (HMAC validation, `payment.captured`/`payment.failed`/`refund.created` handling), but webhook delivery itself has not yet been tested against real webhook traffic — that verification is separate from the payment flow and is still pending. Cash-on-delivery checkout, RLS/trigger enforcement, notifications, PWA caching, and the admin dashboard are implemented and confirmed working by the project owner in production — this is a single-restaurant deployment, not a benchmarked-at-scale system.
           </p>
           <div class="placeholder-grid">
-            <div class="placeholder-box"><span class="ph-icon">🗺️</span><span class="ph-label">System Architecture</span></div>
-            <div class="placeholder-box"><span class="ph-icon">🗄️</span><span class="ph-label">Database Schema</span></div>
-            <div class="placeholder-box"><span class="ph-icon">💳</span><span class="ph-label">Order &amp; Payment Flow</span></div>
-            <div class="placeholder-box"><span class="ph-icon">🛠️</span><span class="ph-label">Admin Dashboard</span></div>
+            <a class="visual-box" href="assets/images/ammu-chai/system_architecture.png" target="_blank" rel="noopener">
+              <img src="assets/images/ammu-chai/system_architecture.png" alt="Ammu's Chai system architecture diagram" loading="lazy" />
+              <span class="vb-label">System Architecture</span>
+            </a>
+            <a class="visual-box" href="assets/images/ammu-chai/database_schema.png" target="_blank" rel="noopener">
+              <img src="assets/images/ammu-chai/database_schema.png" alt="Ammu's Chai database schema diagram" loading="lazy" />
+              <span class="vb-label">Database Schema</span>
+            </a>
+            <a class="visual-box" href="assets/images/ammu-chai/order_payment_flow.png" target="_blank" rel="noopener">
+              <img src="assets/images/ammu-chai/order_payment_flow.png" alt="Ammu's Chai order and payment flow diagram" loading="lazy" />
+              <span class="vb-label">Order &amp; Payment Flow</span>
+            </a>
+            <a class="visual-box" href="assets/images/ammu-chai/admin_dashboard_flow.png" target="_blank" rel="noopener">
+              <img src="assets/images/ammu-chai/admin_dashboard_flow.png" alt="Ammu's Chai admin dashboard flow diagram" loading="lazy" />
+              <span class="vb-label">Admin Dashboard Flow</span>
+            </a>
           </div>
           <div class="project-stack">
             <span class="stack-tag">Next.js 15</span>
@@ -2048,7 +2060,8 @@
             <span class="stack-tag">Vercel</span>
           </div>
           <div class="project-actions">
-            <a class="action-link action-link--primary" href="https://github.com/ammuskaburlu-ai/Ammu-s-Chai-With-Maska-Bun" target="_blank" rel="noopener">GitHub</a>
+            <a class="action-link action-link--primary" href="https://ammus-chai-with-maska-bun.vercel.app" target="_blank" rel="noopener">Live Website</a>
+            <a class="action-link" href="https://github.com/ammuskaburlu-ai/Ammu-s-Chai-With-Maska-Bun" target="_blank" rel="noopener">GitHub</a>
             <a class="action-link" href="https://github.com/ammuskaburlu-ai/Ammu-s-Chai-With-Maska-Bun/blob/main/README.md" target="_blank" rel="noopener">README</a>
             <a class="action-link" href="https://github.com/ammuskaburlu-ai/Ammu-s-Chai-With-Maska-Bun/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">Architecture</a>
             <a class="action-link action-link--placeholder" href="#" title="Coming soon">Evidence</a>
@@ -2298,7 +2311,7 @@
           </a>
           <a class="contact-link" href="https://linkedin.com/in/vikram-chennamsetty" target="_blank" rel="noopener">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            LinkedIn
+            GitHub
           </a>
           <a class="contact-link" href="https://github.com/CHENNAMSETTYVIKRAM" target="_blank" rel="noopener">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.52 11.52 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
