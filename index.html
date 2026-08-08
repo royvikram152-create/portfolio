@@ -805,6 +805,40 @@
       line-height: 1.4;
     }
 
+    /* verified visual thumbnails (real project images) */
+    .visual-box {
+      aspect-ratio: 4 / 3;
+      min-height: 108px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--surface2);
+      overflow: hidden;
+      position: relative;
+      display: block;
+      transition: all 0.2s;
+    }
+    .visual-box:hover {
+      border-color: var(--accent);
+    }
+    .visual-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .visual-box:hover img { transform: scale(1.05); }
+    .visual-box .vb-label {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--text);
+      letter-spacing: 0.04em;
+      background: linear-gradient(0deg, rgba(13,13,15,0.9), transparent);
+      padding: 0.6rem 0.4rem 0.3rem;
+      text-align: center;
+    }
+
     .additional-header {
       display: flex;
       align-items: baseline;
@@ -1769,41 +1803,62 @@
             <a class="project-gh" href="https://github.com/CHENNAMSETTYVIKRAM/AI-Driven_Predictive-Cooling_System_for_Data_Centers" target="_blank" rel="noopener">[GitHub]</a>
           </div>
           <div class="project-title">AI-Driven Predictive Cooling System for Sustainable Data Centers</div>
-          <div class="project-subtitle">Digital twin · LSTM forecasting · MPC · carbon-aware optimization</div>
+          <div class="project-subtitle">Digital twin · LSTM forecasting · uncertainty-aware predictive control · carbon-aware module</div>
           <div class="project-badges">
-            <span class="status-badge">Research Prototype</span>
+            <span class="status-badge">Research Prototype · Simulation Complete</span>
             <span class="project-badge">AI</span>
             <span class="project-badge">Digital Twin</span>
-            <span class="project-badge">MPC</span>
-            <span class="project-badge">Carbon Optimization</span>
+            <span class="project-badge">Predictive Control</span>
+            <span class="project-badge">Carbon-Aware Module</span>
           </div>
           <p class="project-desc">
-            A complete digital twin system for data center thermal management, pairing physics-based thermal simulation with a closed-loop Model Predictive Control (MPC) controller. An LSTM forecasts short-horizon temperature trajectories, and Monte Carlo Dropout provides per-step uncertainty estimates that the controller factors directly into its cooling decisions. Carbon-aware optimization is built in as a core module alongside the thermal objective, weighing cooling actions against real-time grid carbon intensity and shifting load toward lower-carbon periods without breaching thermal safety bounds. The system exposes a FastAPI monitoring interface and REST API, is containerized with Docker for reproducible deployment, and includes a dedicated evaluation framework that runs comparative controller analysis, benchmarking carbon-aware strategies against baseline MPC across simulated load profiles. Twin, forecaster, controller, carbon module, and evaluation harness are built as independently testable, modular components.
+            <strong>Problem:</strong> reactive data-center cooling either lets rack temperatures spike before responding, or overcools continuously to guarantee safety, wasting energy either way. <strong>Architecture:</strong> a physics-based digital twin — synthetic CPU/GPU workload generation feeding a thermal model with rack-level dynamics and heat recirculation — paired with a closed-loop controller, plus a carbon-aware optimization module that factors grid carbon intensity into cooling decisions. <strong>Algorithms:</strong> a bidirectional LSTM forecasts short-horizon rack temperatures, Monte Carlo Dropout quantifies per-step prediction uncertainty, and an uncertainty-aware predictive controller (MPC-style, not a formal QP/convex solver) uses that uncertainty to size its safety margin. <strong>Verified outcome:</strong> evaluated over a 48-hour window across 40 racks against static and reactive baseline controllers, the predictive controller achieved the lowest peak temperature (22.84°C) with zero safety violations across all three controllers — demonstrating the safety-efficiency trade-off of conservative predictive control. Carbon-emission reduction is implemented as a module but is not yet a validated experimental result. Exposed via a FastAPI REST interface and containerized with Docker.
           </p>
           <div class="placeholder-grid">
-            <div class="placeholder-box"><span class="ph-icon">🗺️</span><span class="ph-label">Architecture Diagram</span></div>
-            <div class="placeholder-box"><span class="ph-icon">🔁</span><span class="ph-label">System Workflow</span></div>
-            <div class="placeholder-box"><span class="ph-icon">🌡️</span><span class="ph-label">Thermal Plots</span></div>
-            <div class="placeholder-box"><span class="ph-icon">📉</span><span class="ph-label">Controller Comparison</span></div>
+            <a class="visual-box" href="https://github.com/CHENNAMSETTYVIKRAM/AI-Driven_Predictive-Cooling_System_for_Data_Centers/blob/master/docs/portfolio/architecture/system_architecture.png" target="_blank" rel="noopener">
+              <img src="assets/images/ai-cooling/system_architecture.png" alt="AI Cooling system architecture diagram" loading="lazy" />
+              <span class="vb-label">System Architecture</span>
+            </a>
+            <a class="visual-box" href="https://github.com/CHENNAMSETTYVIKRAM/AI-Driven_Predictive-Cooling_System_for_Data_Centers/blob/master/docs/portfolio/architecture/control_architecture.png" target="_blank" rel="noopener">
+              <img src="assets/images/ai-cooling/control_architecture.png" alt="AI Cooling control loop architecture diagram" loading="lazy" />
+              <span class="vb-label">Control Architecture</span>
+            </a>
+            <a class="visual-box" href="https://github.com/CHENNAMSETTYVIKRAM/AI-Driven_Predictive-Cooling_System_for_Data_Centers/blob/master/docs/portfolio/workflow/system_workflow.png" target="_blank" rel="noopener">
+              <img src="assets/images/ai-cooling/system_workflow.png" alt="AI Cooling system workflow diagram" loading="lazy" />
+              <span class="vb-label">System Workflow</span>
+            </a>
+            <a class="visual-box" href="https://github.com/CHENNAMSETTYVIKRAM/AI-Driven_Predictive-Cooling_System_for_Data_Centers/blob/master/docs/portfolio/results/controller_comparison.png" target="_blank" rel="noopener">
+              <img src="assets/images/ai-cooling/controller_comparison.png" alt="Static vs reactive vs predictive controller comparison chart" loading="lazy" />
+              <span class="vb-label">Controller Comparison</span>
+            </a>
+            <a class="visual-box" href="https://github.com/CHENNAMSETTYVIKRAM/AI-Driven_Predictive-Cooling_System_for_Data_Centers/blob/master/docs/portfolio/results/temperature_safety.png" target="_blank" rel="noopener">
+              <img src="assets/images/ai-cooling/temperature_safety.png" alt="Temperature and safety timeline chart" loading="lazy" />
+              <span class="vb-label">Temperature &amp; Safety</span>
+            </a>
+            <a class="visual-box" href="https://github.com/CHENNAMSETTYVIKRAM/AI-Driven_Predictive-Cooling_System_for_Data_Centers/blob/master/docs/portfolio/results/cooling_power.png" target="_blank" rel="noopener">
+              <img src="assets/images/ai-cooling/cooling_power.png" alt="Cooling power timeline chart" loading="lazy" />
+              <span class="vb-label">Cooling Power</span>
+            </a>
           </div>
           <div class="project-stack">
             <span class="stack-tag">Python</span>
             <span class="stack-tag">PyTorch</span>
-            <span class="stack-tag">FastAPI</span>
-            <span class="stack-tag">Docker</span>
-            <span class="stack-tag">Digital Twin</span>
-            <span class="stack-tag">LSTM</span>
-            <span class="stack-tag">MPC</span>
-            <span class="stack-tag">Monte Carlo Dropout</span>
-            <span class="stack-tag">Carbon-Aware Optimization</span>
             <span class="stack-tag">NumPy</span>
             <span class="stack-tag">Pandas</span>
+            <span class="stack-tag">SciPy</span>
+            <span class="stack-tag">FastAPI</span>
+            <span class="stack-tag">Docker</span>
+            <span class="stack-tag">LSTM</span>
+            <span class="stack-tag">Monte Carlo Dropout</span>
+            <span class="stack-tag">Digital Twin</span>
+            <span class="stack-tag">Predictive Control</span>
+            <span class="stack-tag">Thermal Modeling</span>
           </div>
           <div class="project-actions">
             <a class="action-link action-link--primary" href="https://github.com/CHENNAMSETTYVIKRAM/AI-Driven_Predictive-Cooling_System_for_Data_Centers" target="_blank" rel="noopener">GitHub</a>
-            <a class="action-link action-link--placeholder" href="#" title="Coming soon">README</a>
-            <a class="action-link action-link--placeholder" href="#" title="Coming soon">Architecture</a>
-            <a class="action-link action-link--placeholder" href="#" title="Coming soon">Report</a>
+            <a class="action-link" href="https://github.com/CHENNAMSETTYVIKRAM/AI-Driven_Predictive-Cooling_System_for_Data_Centers/blob/master/README.md" target="_blank" rel="noopener">README</a>
+            <a class="action-link" href="https://github.com/CHENNAMSETTYVIKRAM/AI-Driven_Predictive-Cooling_System_for_Data_Centers/blob/master/docs/portfolio/architecture/system_architecture.png" target="_blank" rel="noopener">Architecture</a>
+            <a class="action-link" href="https://github.com/CHENNAMSETTYVIKRAM/AI-Driven_Predictive-Cooling_System_for_Data_Centers/blob/master/docs/portfolio/PROJECT_EVIDENCE.md" target="_blank" rel="noopener">Report</a>
           </div>
         </div>
 
