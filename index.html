@@ -1653,7 +1653,7 @@
           <div class="education-achievements-label">Notable Achievements</div>
           <ul class="education-achievements">
             <li><strong>S Grade</strong> in Signal Processing (highest grade) — Simulink and DSP for FPGA</li>
-            <li><strong>Google Gemini Student Ambassador</strong> — selected for campus AI advocacy program</li>
+            <li><strong>Google Gemini Student Ambassador</strong> — selected for Google's 2026 campus AI advocacy program</li>
           </ul>
         </div>
       </div>
@@ -2007,25 +2007,51 @@
 
       <div class="projects-grid">
 
-        <!-- Project 5: Ammu's Chai -->
+        <!-- Project 5: Ammu's Chai With Maska Bun -->
         <div class="project-card fade-up">
           <div class="project-header">
             <span class="project-icon">🍽️</span>
             <a class="project-gh" href="https://github.com/ammuskaburlu-ai/Ammu-s-Chai-With-Maska-Bun" target="_blank" rel="noopener">[GitHub]</a>
           </div>
-          <div class="project-title">Ammu's Chai — Food Ordering Platform</div>
-          <div class="project-subtitle">Production-architected ordering system with admin controls</div>
+          <div class="project-title">Ammu's Chai With Maska Bun</div>
+          <div class="project-subtitle">Security-Hardened Full-Stack Food Ordering Platform</div>
           <div class="project-badges">
-            <span class="status-badge">Production Ready</span>
-            <span class="project-badge">Next.js 15</span>
+            <span class="status-badge">Production Deployed · Razorpay Live</span>
+            <span class="project-badge">Full-Stack</span>
+            <span class="project-badge">Next.js</span>
+            <span class="project-badge">Supabase</span>
+            <span class="project-badge">Razorpay</span>
+            <span class="project-badge">PostgreSQL</span>
+            <span class="project-badge">PWA</span>
           </div>
           <p class="project-desc">
-            Restaurant ordering platform structured around a customer storefront and admin dashboard. Supabase Row-Level Security governs data access; Razorpay handles payments end to end. Authentication, order tracking, loyalty points, and coupon logic sit behind a production-oriented architecture built for real transactional use.
+            <strong>Problem:</strong> food-ordering platforms that let the browser dictate order totals or payment status open the door to client-side manipulation of transaction data. <strong>Architecture:</strong> a Next.js 15 App Router storefront and admin dashboard sit in front of a Supabase PostgreSQL backend — customer requests pass through server-side validation and API routes/server actions before touching the database, so order pricing and payment state are always resolved server-side, never trusted from the client. Supabase Row-Level Security and PL/pgSQL triggers enforce that boundary again at the database layer, alongside service-role operations that stay server-only. <strong>Payment flow:</strong> checkout hands off to Razorpay; the payment response is checked server-side with HMAC-SHA256 payment signature verification before any order is created or updated, so a forged client response can't fabricate a paid order. <strong>Supporting systems:</strong> React Hook Form + Zod validate every input, a Zustand-persisted cart survives page reloads, Resend sends transactional email, a Telegram bot alerts the admin on new orders, and a Serwist-powered PWA caches the storefront for installable/offline use while excluding checkout and admin routes from the cache. <strong>Verified:</strong> the Razorpay live integration has been exercised end-to-end with one real successful payment, confirming checkout, signature verification, and order creation in production. Cash-on-delivery checkout, RLS/trigger enforcement, notifications, PWA caching, and the admin dashboard are implemented and confirmed working by the project owner in both local and production environments — this is a single-restaurant deployment, not a benchmarked-at-scale system.
           </p>
+          <div class="placeholder-grid">
+            <div class="placeholder-box"><span class="ph-icon">🗺️</span><span class="ph-label">System Architecture</span></div>
+            <div class="placeholder-box"><span class="ph-icon">🗄️</span><span class="ph-label">Database Schema</span></div>
+            <div class="placeholder-box"><span class="ph-icon">💳</span><span class="ph-label">Order &amp; Payment Flow</span></div>
+            <div class="placeholder-box"><span class="ph-icon">🛠️</span><span class="ph-label">Admin Dashboard</span></div>
+          </div>
           <div class="project-stack">
             <span class="stack-tag">Next.js 15</span>
-            <span class="stack-tag">Supabase/RLS</span>
+            <span class="stack-tag">TypeScript</span>
+            <span class="stack-tag">Supabase</span>
+            <span class="stack-tag">PostgreSQL</span>
             <span class="stack-tag">Razorpay</span>
+            <span class="stack-tag">Zod</span>
+            <span class="stack-tag">Zustand</span>
+            <span class="stack-tag">React Hook Form</span>
+            <span class="stack-tag">Serwist</span>
+            <span class="stack-tag">Resend</span>
+            <span class="stack-tag">Telegram API</span>
+            <span class="stack-tag">Vercel</span>
+          </div>
+          <div class="project-actions">
+            <a class="action-link action-link--primary" href="https://github.com/ammuskaburlu-ai/Ammu-s-Chai-With-Maska-Bun" target="_blank" rel="noopener">GitHub</a>
+            <a class="action-link" href="https://github.com/ammuskaburlu-ai/Ammu-s-Chai-With-Maska-Bun/blob/main/README.md" target="_blank" rel="noopener">README</a>
+            <a class="action-link" href="https://github.com/ammuskaburlu-ai/Ammu-s-Chai-With-Maska-Bun/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">Architecture</a>
+            <a class="action-link action-link--placeholder" href="#" title="Coming soon">Evidence</a>
           </div>
         </div>
 
@@ -2109,8 +2135,8 @@
 
         <div class="lead-card fade-up">
           <div class="lead-role">Google Gemini Student Ambassador</div>
-          <div class="lead-org">Google</div>
-          <div class="lead-desc">Selected to represent Google's Gemini programme at campus level, conducting peer workshops and fostering AI awareness in developer community.</div>
+          <div class="lead-org">Google · 2026</div>
+          <div class="lead-desc">Selected for Google's Gemini campus AI program.</div>
         </div>
 
         <div class="lead-card fade-up">
