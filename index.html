@@ -1,8 +1,654 @@
-@@
-   </section>
- 
--  <script src="js/main.js" defer></script>
-+  <script src="js/main.js" defer></script>
-+  <script src="github-stats.js" defer></script>
- </body>
- </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vikram Chennamsetty — AI / Digital Twin Engineer</title>
+  <!-- REDIRECT GITHUB TRAFFIC ONLY -->
+  <script>
+    if (window.location.hostname === "royvikram152-create.github.io") {
+      window.location.href = "https://vikram-chennamsetty.vercel.app/";
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & tokens ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0d0f;
+      --surface:   #141417;
+      --surface2:  #1c1c21;
+      --border:    #2a2a32;
+      --accent:    #e8a020;
+      --accent2:   #f0c060;
+      --accent-alt: #3b82f6;
+      --text:      #e8e8ec;
+      --muted:     #8888a0;
+      --faint:     #3a3a48;
+      --radius:    6px;
+      --mono:      'DM Mono', monospace;
+      --display:   'Syne', sans-serif;
+      --body:      'DM Sans', sans-serif;
+      --max:       1100px;
+      --nav-h:     60px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── Accessibility: focus states & reduced motion ─────── */
+    a:focus-visible,
+    button:focus-visible,
+    .skill-tag:focus-visible,
+    .stack-tag:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 3px;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -48px;
+      left: 1rem;
+      z-index: 300;
+      background: var(--accent);
+      color: #0d0d0f;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 0.6rem 1rem;
+      border-radius: 4px;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* ── Scrollbar ───────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--faint); border-radius: 2px; }
+
+    /* ── Nav ─────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.25rem, 5vw, 3rem);
+      background: rgba(13,13,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .nav-links a:hover { 
+      color: var(--accent);
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-burger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--muted);
+      transition: 0.3s;
+    }
+
+    /* mobile nav */
+    @media (max-width: 680px) {
+      .nav-links {
+        position: fixed;
+        top: var(--nav-h);
+        left: 0; right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 0;
+        display: none;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a {
+        padding: 0.6rem clamp(1.25rem, 5vw, 3rem);
+        font-size: 13px;
+      }
+      .nav-burger { display: flex; }
+    }
+
+    /* ── Wrapper ─────────────────────────────────────────── */
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 clamp(1.25rem, 5vw, 3rem);
+    }
+
+    /* ── Section base ────────────────────────────────────── */
+    section {
+      padding: 5rem 0;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2.5rem;
+      line-height: 1.2;
+    }
+
+    .subsection-title {
+      font-family: var(--display);
+      font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .divider {
+      width: 36px; height: 2px;
+      background: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    /* ── Hero ────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* animated grid texture */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.15;
+      pointer-events: none;
+      animation: gridShift 20s linear infinite;
+    }
+
+    @keyframes gridShift {
+      0% { background-position: 0 0; }
+      100% { background-position: 48px 48px; }
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; right: -80px;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,160,32,0.12) 0%, transparent 70%);
+      pointer-events: none;
+      animation: pulse 8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      border: 1px solid rgba(232,160,32,0.3);
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.06em;
+      background: rgba(232,160,32,0.05);
+      transition: all 0.3s;
+    }
+
+    .hero-tag:hover {
+      border-color: var(--accent);
+      background: rgba(232,160,32,0.1);
+      transform: translateY(-2px);
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+
+    .hero-name {
+      font-family: var(--display);
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .hero-name span { 
+      background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-role {
+      font-family: var(--mono);
+      font-size: clamp(13px, 2vw, 15px);
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-desc {
+      max-width: 540px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      letter-spacing: 0.06em;
+      padding: 0.65rem 1.4rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0d0d0f;
+      font-weight: 500;
+    }
+    .btn-primary:hover { 
+      background: var(--accent2); 
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(232,160,32,0.2);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { 
+      border-color: var(--accent); 
+      color: var(--accent);
+      background: rgba(232,160,32,0.08);
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 1.25rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-link {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--faint);
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+    }
+    .hero-link:hover { 
+      color: var(--accent);
+      background: rgba(232,160,32,0.08);
+    }
+  </style>
+</head>
+<body>
+  <!-- SKIP LINK -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">VC</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#resume">Resume</a></li>
+    </ul>
+    <div class="nav-burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-tag">Welcome!</div>
+        <h1 class="hero-name">Vikram <span>Chennamsetty</span></h1>
+        <div class="hero-role">AI / Digital Twin Engineer</div>
+        <p class="hero-desc">Building intelligent systems that bridge the digital and physical worlds. Currently focused on AI infrastructure, real-time simulation, and autonomous systems.</p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">Explore my work</a>
+          <a href="https://github.com/CHENNAMSETTYVIKRAM" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
+        </div>
+        <div class="hero-links">
+          <a href="https://github.com/CHENNAMSETTYVIKRAM" class="hero-link" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/vikram-chennamsetty" class="hero-link" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="section-label">About</div>
+      <h2 class="section-title">Who I Am</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I'm an AI and Digital Twin engineer passionate about creating intelligent systems that solve real-world problems. With expertise in machine learning, real-time simulation, and distributed systems, I build solutions that matter.</p>
+          <p>My focus is on bridging the gap between cutting-edge AI research and practical, deployable systems—whether through optimizing neural architectures, designing scalable backends, or developing digital twins for complex physical systems.</p>
+        </div>
+        <div class="about-stats">
+          <div class="stat-cell">
+            <div class="stat-value">5+</div>
+            <div class="stat-label">Years in AI/ML</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-value">20+</div>
+            <div class="stat-label">Projects Delivered</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-value">3</div>
+            <div class="stat-label">Published Papers</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-value">Full</div>
+            <div class="stat-label">Stack</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-label">Expertise</div>
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="skill-group-label">AI & Machine Learning</div>
+          <div class="skill-tags">
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">TensorFlow</span>
+            <span class="skill-tag">LLMs</span>
+            <span class="skill-tag">Computer Vision</span>
+            <span class="skill-tag">NLP</span>
+            <span class="skill-tag">Reinforcement Learning</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Backend & Infrastructure</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Go</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">Kubernetes</span>
+            <span class="skill-tag">AWS</span>
+            <span class="skill-tag">PostgreSQL</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Digital Twins & Simulation</div>
+          <div class="skill-tags">
+            <span class="skill-tag">ROS</span>
+            <span class="skill-tag">Physics Simulation</span>
+            <span class="skill-tag">Real-time Systems</span>
+            <span class="skill-tag">3D Visualization</span>
+            <span class="skill-tag">Sensor Fusion</span>
+            <span class="skill-tag">IoT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-label">Featured Work</div>
+      <h2 class="section-title">Projects</h2>
+      <p class="projects-intro">A selection of projects I've built and contributed to, spanning AI research, infrastructure, and digital twins.</p>
+      
+      <div class="featured-projects-grid">
+        <div class="project-card project-card--featured">
+          <div class="project-header">
+            <div>
+              <div class="project-badges">
+                <span class="project-badge">Featured</span>
+                <span class="status-badge">Active</span>
+              </div>
+              <h3 class="project-title">Digital Twin Platform</h3>
+              <div class="project-subtitle">Real-time simulation engine</div>
+            </div>
+            <div class="project-icon">🔷</div>
+          </div>
+          <p class="project-desc">A production-grade digital twin platform enabling real-time synchronization between physical and virtual environments. Built with distributed systems architecture for scalability.</p>
+          <div class="project-stack">
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">Go</span>
+            <span class="stack-tag">WebSocket</span>
+            <span class="stack-tag">Kubernetes</span>
+            <span class="stack-tag">Sensor Fusion</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/CHENNAMSETTYVIKRAM" class="action-link" target="_blank" rel="noopener">View on GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-header">
+            <div>
+              <h3 class="project-title">AI Model Optimizer</h3>
+              <div class="project-subtitle">Neural architecture optimization</div>
+            </div>
+            <div class="project-icon">⚡</div>
+          </div>
+          <p class="project-desc">Framework for optimizing large language models through quantization, pruning, and knowledge distillation. Achieves 10x speedup with minimal accuracy loss.</p>
+          <div class="project-stack">
+            <span class="stack-tag">PyTorch</span>
+            <span class="stack-tag">ONNX</span>
+            <span class="stack-tag">TensorRT</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/CHENNAMSETTYVIKRAM" class="action-link" target="_blank" rel="noopener">Code</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div>
+              <h3 class="project-title">Autonomous Navigation System</h3>
+              <div class="project-subtitle">Real-time path planning & control</div>
+            </div>
+            <div class="project-icon">🤖</div>
+          </div>
+          <p class="project-desc">End-to-end autonomous navigation system combining SLAM, computer vision, and reinforcement learning for dynamic obstacle avoidance.</p>
+          <div class="project-stack">
+            <span class="stack-tag">ROS</span>
+            <span class="stack-tag">OpenCV</span>
+            <span class="stack-tag">TensorFlow</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/CHENNAMSETTYVIKRAM" class="action-link" target="_blank" rel="noopener">Explore</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div>
+              <h3 class="project-title">Data Pipeline Infrastructure</h3>
+              <div class="project-subtitle">ETL system for AI training</div>
+            </div>
+            <div class="project-icon">📊</div>
+          </div>
+          <p class="project-desc">Scalable data pipeline handling millions of events per second, with real-time feature engineering and data quality monitoring.</p>
+          <div class="project-stack">
+            <span class="stack-tag">Kafka</span>
+            <span class="stack-tag">Apache Spark</span>
+            <span class="stack-tag">PostgreSQL</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://github.com/CHENNAMSETTYVIKRAM" class="action-link" target="_blank" rel="noopener">Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GITHUB ACTIVITY -->
+  <section id="github-activity">
+    <div class="container">
+      <div class="section-label">Activity</div>
+      <h2 class="section-title">GitHub Stats</h2>
+      <div class="github-stats-grid">
+        <!-- Github stats will be populated here by github-stats.js -->
+        <div class="github-widget-box"><div style="color:var(--muted);font-family:var(--mono);font-size:13px">Loading stats...</div></div>
+        <div class="github-widget-box"><div style="color:var(--muted);font-family:var(--mono);font-size:13px">Loading languages...</div></div>
+        <div class="github-widget-box full-width"><div style="color:var(--muted);font-family:var(--mono);font-size:13px">Loading contribution graph...</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESUME -->
+  <section id="resume">
+    <div class="container">
+      <div class="resume-box">
+        <h2 class="section-title">Download Resume</h2>
+        <p>View my full resume for detailed experience, education, and certifications.</p>
+        <div class="resume-actions">
+          <a href="Vikram_Chennamsetty_Resume.pdf" download class="btn btn-primary">Download PDF</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/main.js" defer></script>
+  <script src="github-stats.js" defer></script>
+</body>
+</html>

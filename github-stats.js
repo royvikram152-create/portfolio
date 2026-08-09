@@ -13,7 +13,7 @@
   function createBox() {
     const box = document.createElement('div');
     box.className = 'github-widget-box';
-    box.innerHTML = '<div style="color:var(--muted);font-family:var(--mono);font-size:13px">Loadinghellip;</div>';
+    box.innerHTML = '<div style="color:var(--muted);font-family:var(--mono);font-size:13px">Loading&hellip;</div>';
     return box;
   }
 
@@ -24,8 +24,7 @@
       if (!src) return;
       if (src.includes('[') || src.includes(']') || src.includes(')(') || src.includes('](')) {
         // attempt to extract a valid URL inside the string
-        const m = src.match(/https?:\/\/[^
-)'"]+/);
+        const m = src.match(/https?:\/\/[^)'"]\+/);
         if (m) {
           img.src = m[0];
           console.debug('Fixed img src to', m[0]);
@@ -50,22 +49,22 @@
     return `
       <div style="text-align:center">
         <div style="font-family:var(--display);font-size:1rem;font-weight:700;margin-bottom:6px">GitHub Stats</div>
-        <div style="color:var(--muted);font-size:13px;margin-bottom:12px">Live data from GitHub mdash; ${USER}</div>
+        <div style="color:var(--muted);font-size:13px;margin-bottom:12px">Live data from GitHub &mdash; ${USER}</div>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.6rem">
           <div style="background:var(--surface2);padding:0.75rem;border-radius:6px">
-            <div style="font-family:var(--display);font-weight:800;font-size:1.25rem;background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent">${totals.stars}</div>
+            <div style="font-family:var(--display);font-weight:800;font-size:1.25rem;background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${totals.stars}</div>
             <div style="font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase">Stars</div>
           </div>
           <div style="background:var(--surface2);padding:0.75rem;border-radius:6px">
-            <div style="font-family:var(--display);font-weight:800;font-size:1.25rem;background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent">${totals.forks}</div>
+            <div style="font-family:var(--display);font-weight:800;font-size:1.25rem;background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${totals.forks}</div>
             <div style="font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase">Forks</div>
           </div>
           <div style="background:var(--surface2);padding:0.75rem;border-radius:6px">
-            <div style="font-family:var(--display);font-weight:800;font-size:1.25rem;background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent">${totals.watchers}</div>
+            <div style="font-family:var(--display);font-weight:800;font-size:1.25rem;background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${totals.watchers}</div>
             <div style="font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase">Watchers</div>
           </div>
           <div style="background:var(--surface2);padding:0.75rem;border-radius:6px">
-            <div style="font-family:var(--display);font-weight:800;font-size:1.25rem;background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent">${totals.repos}</div>
+            <div style="font-family:var(--display);font-weight:800;font-size:1.25rem;background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${totals.repos}</div>
             <div style="font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase">Repositories</div>
           </div>
         </div>
