@@ -992,6 +992,102 @@
       grid-column: 1 / -1;
     }
 
+    /* live GitHub stats/languages cards (self-hosted, api.github.com direct) */
+    .gh-card {
+      width: 100%;
+      padding: 0.5rem 0.25rem;
+    }
+    .gh-card-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .gh-stats-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+    }
+    .gh-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .gh-stat-value {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+    .gh-stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .gh-lang-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .gh-lang-row {
+      display: grid;
+      grid-template-columns: 90px 1fr 34px;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .gh-lang-name {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .gh-lang-track {
+      height: 6px;
+      background: var(--surface2);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .gh-lang-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.6s ease;
+    }
+    .gh-lang-pct {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      text-align: right;
+    }
+    .gh-card-state {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--muted);
+      text-align: center;
+      padding: 1rem 0.5rem;
+      line-height: 1.6;
+    }
+    .gh-card-state a { color: var(--accent); }
+    .gh-card-state a:hover { text-decoration: underline; }
+    .gh-skeleton {
+      height: 12px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%);
+      background-size: 200% 100%;
+      animation: ghShimmer 1.4s ease-in-out infinite;
+      margin-bottom: 0.6rem;
+    }
+    @keyframes ghShimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
     /* ── Resume ──────────────────────────────────────────── */
     #resume {
       text-align: center;
@@ -2174,17 +2270,27 @@
     </div>
   </section>
 
-  <!-- ── GitHub Activity (live GitHub Readme Stats widgets) ─── -->
+  <!-- ── GitHub Activity (live GitHub REST API cards) ─── -->
   <section id="github-activity" style="background: var(--surface);">
     <div class="container">
       <p class="section-label fade-up">Live From GitHub</p>
       <h2 class="section-title fade-up">GitHub Activity</h2>
       <div class="github-stats-grid fade-up">
         <div class="github-widget-box">
-          <img src="https://github-readme-stats.vercel.app/api?username=CHENNAMSETTYVIKRAM&show_icons=true&theme=dark&bg_color=141417&title_color=e8a020&icon_color=e8a020&text_color=e8e8ec&border_color=2a2a32&hide_border=false" alt="Vikram Chennamsetty's GitHub stats" loading="lazy" />
+          <div class="gh-card" id="ghStatsCard">
+            <div class="gh-card-title">GitHub Stats</div>
+            <div class="gh-skeleton" style="width:70%"></div>
+            <div class="gh-skeleton" style="width:50%"></div>
+            <div class="gh-skeleton" style="width:60%"></div>
+          </div>
         </div>
         <div class="github-widget-box">
-          <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=CHENNAMSETTYVIKRAM&layout=compact&theme=dark&bg_color=141417&title_color=e8a020&text_color=e8e8ec&border_color=2a2a32&hide_border=false" alt="Vikram Chennamsetty's most used languages" loading="lazy" />
+          <div class="gh-card" id="ghLangsCard">
+            <div class="gh-card-title">Most Used Languages</div>
+            <div class="gh-skeleton" style="width:90%"></div>
+            <div class="gh-skeleton" style="width:75%"></div>
+            <div class="gh-skeleton" style="width:60%"></div>
+          </div>
         </div>
         <div class="github-widget-box">
           <img src="https://github-readme-streak-stats.herokuapp.com/?user=CHENNAMSETTYVIKRAM&theme=dark&background=141417&stroke=2a2a32&ring=e8a020&fire=e8a020&currStreakLabel=e8a020&sideLabels=e8e8ec&currStreakNum=e8e8ec&sideNums=e8e8ec&dates=8888a0" alt="Vikram Chennamsetty's GitHub contribution streak" loading="lazy" />
@@ -2392,6 +2498,192 @@
       if (e.key === 'Escape' && resumeModal && resumeModal.classList.contains('open')) closeModal();
     });
 
+  </script>
+
+  <!-- ── Live GitHub stats (self-hosted, direct GitHub REST API — no third-party badge service) ─── -->
+  <script>
+    (function () {
+      const GH_USER = 'CHENNAMSETTYVIKRAM';
+      const CACHE_KEY = 'ghActivityCache:' + GH_USER;
+      const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
+      const LANG_COLORS = {
+        Python: '#3572A5', JavaScript: '#f1e05a', TypeScript: '#3178c6',
+        'C++': '#f34b7d', C: '#555555', HTML: '#e34c26', CSS: '#563d7c',
+        MATLAB: '#e16737', Java: '#b07219', Shell: '#89e051',
+        'Jupyter Notebook': '#DA5B0B', Dockerfile: '#384d54', Vue: '#41b883',
+        Go: '#00ADD8', Rust: '#dea584', PHP: '#4F5D95', Ruby: '#701516'
+      };
+      const langColor = (name) => LANG_COLORS[name] || 'var(--accent)';
+
+      function readCache() {
+        try {
+          const raw = localStorage.getItem(CACHE_KEY);
+          if (!raw) return null;
+          const parsed = JSON.parse(raw);
+          if (!parsed || !parsed.timestamp || !parsed.data) return null;
+          return parsed;
+        } catch (e) { return null; }
+      }
+      function writeCache(data) {
+        try {
+          localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data }));
+        } catch (e) { /* storage unavailable — non-fatal */ }
+      }
+
+      async function fetchJSON(url) {
+        const res = await fetch(url, { headers: { Accept: 'application/vnd.github+json' } });
+        if (!res.ok) {
+          const err = new Error('GitHub API ' + res.status);
+          err.status = res.status;
+          throw err;
+        }
+        return res.json();
+      }
+
+      async function fetchAllRepos(username) {
+        let page = 1;
+        let all = [];
+        while (true) {
+          const repos = await fetchJSON(
+            'https://api.github.com/users/' + username + '/repos?per_page=100&page=' + page + '&type=owner'
+          );
+          all = all.concat(repos);
+          if (repos.length < 100) break;
+          page += 1;
+          if (page > 10) break; // safety cap
+        }
+        return all;
+      }
+
+      async function fetchLanguageBytes(username, repos) {
+        // Only query non-fork repositories.
+        const candidates = repos.filter(r => !r.fork);
+        const totals = {};
+        // Cap concurrent/total calls to stay well within the unauthenticated
+        // GitHub API rate limit (60 req/hr per client IP).
+        const capped = candidates.slice(0, 40);
+        for (const repo of capped) {
+          try {
+            const langs = await fetchJSON('https://api.github.com/repos/' + username + '/' + repo.name + '/languages');
+            for (const [lang, bytes] of Object.entries(langs)) {
+              totals[lang] = (totals[lang] || 0) + bytes;
+            }
+          } catch (e) {
+            // one repo's language call failing shouldn't break the whole card
+            continue;
+          }
+        }
+        return totals;
+      }
+
+      async function buildGhData() {
+        const user = await fetchJSON('https://api.github.com/users/' + GH_USER);
+        const repos = await fetchAllRepos(GH_USER);
+        const nonForkRepos = repos.filter(r => !r.fork);
+        const totalStars = nonForkRepos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
+        const totalForks = nonForkRepos.reduce((sum, r) => sum + (r.forks_count || 0), 0);
+        const languageBytes = await fetchLanguageBytes(GH_USER, repos);
+
+        return {
+          publicRepos: user.public_repos,
+          followers: user.followers,
+          totalStars,
+          totalForks,
+          languageBytes
+        };
+      }
+
+      function renderStatsCard(data) {
+        const el = document.getElementById('ghStatsCard');
+        if (!el) return;
+        el.innerHTML =
+          '<div class="gh-card-title">GitHub Stats</div>' +
+          '<div class="gh-stats-list">' +
+            statItem(data.publicRepos, 'Public Repos') +
+            statItem(data.followers, 'Followers') +
+            statItem(data.totalStars, 'Stars Earned') +
+            statItem(data.totalForks, 'Forks Received') +
+          '</div>';
+      }
+      function statItem(value, label) {
+        return '<div class="gh-stat-item"><div class="gh-stat-value">' + value + '</div><div class="gh-stat-label">' + label + '</div></div>';
+      }
+
+      function renderLangsCard(languageBytes) {
+        const el = document.getElementById('ghLangsCard');
+        if (!el) return;
+        const entries = Object.entries(languageBytes).sort((a, b) => b[1] - a[1]);
+        if (entries.length === 0) {
+          el.innerHTML = '<div class="gh-card-title">Most Used Languages</div><div class="gh-card-state">No language data available yet.</div>';
+          return;
+        }
+        // Percentages are computed against the TOTAL across every language
+        // GitHub reported, not just the six shown — so the top-6 add up to
+        // their true share, not an inflated share of a truncated set.
+        const total = entries.reduce((sum, [, bytes]) => sum + bytes, 0);
+        const top = entries.slice(0, 6);
+        const shownBytes = top.reduce((sum, [, bytes]) => sum + bytes, 0);
+        const otherBytes = total - shownBytes;
+
+        let rows = '';
+        for (const [lang, bytes] of top) {
+          const pct = total > 0 ? ((bytes / total) * 100) : 0;
+          rows +=
+            '<div class="gh-lang-row">' +
+              '<span class="gh-lang-name">' + escapeHtml(lang) + '</span>' +
+              '<span class="gh-lang-track"><span class="gh-lang-fill" style="width:' + pct.toFixed(1) + '%;background:' + langColor(lang) + '"></span></span>' +
+              '<span class="gh-lang-pct">' + pct.toFixed(0) + '%</span>' +
+            '</div>';
+        }
+        if (otherBytes > 0) {
+          const pct = total > 0 ? ((otherBytes / total) * 100) : 0;
+          rows +=
+            '<div class="gh-lang-row">' +
+              '<span class="gh-lang-name">Other</span>' +
+              '<span class="gh-lang-track"><span class="gh-lang-fill" style="width:' + pct.toFixed(1) + '%;background:var(--faint)"></span></span>' +
+              '<span class="gh-lang-pct">' + pct.toFixed(0) + '%</span>' +
+            '</div>';
+        }
+        el.innerHTML = '<div class="gh-card-title">Most Used Languages</div><div class="gh-lang-list">' + rows + '</div>';
+      }
+
+      function escapeHtml(str) {
+        return String(str).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      }
+
+      function renderError(message) {
+        const fallback = '<div class="gh-card-state">' + message + '<br>View live on <a href="https://github.com/' + GH_USER + '" target="_blank" rel="noopener">github.com/' + GH_USER + '</a></div>';
+        const statsEl = document.getElementById('ghStatsCard');
+        const langsEl = document.getElementById('ghLangsCard');
+        if (statsEl) statsEl.innerHTML = '<div class="gh-card-title">GitHub Stats</div>' + fallback;
+        if (langsEl) langsEl.innerHTML = '<div class="gh-card-title">Most Used Languages</div>' + fallback;
+      }
+
+      async function init() {
+        const cached = readCache();
+        if (cached) {
+          renderStatsCard(cached.data);
+          renderLangsCard(cached.data.languageBytes);
+        }
+        const isFresh = cached && (Date.now() - cached.timestamp < CACHE_TTL_MS);
+        if (isFresh) return; // cached data is recent enough — skip the network round trip
+
+        try {
+          const data = await buildGhData();
+          writeCache(data);
+          renderStatsCard(data);
+          renderLangsCard(data.languageBytes);
+        } catch (e) {
+          if (cached) return; // stale cache already rendered above — keep it rather than showing an error
+          const rateLimited = e && e.status === 403;
+          renderError(rateLimited
+            ? 'GitHub API rate limit reached for this network.'
+            : 'Live stats unavailable right now.');
+        }
+      }
+
+      init();
+    })();
   </script>
 
 </body>
